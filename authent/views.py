@@ -7,6 +7,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from .serializers import *
+from django.db.models import Count, Sum, Avg, Max, Min
+from django.forms.models import model_to_dict
+from .modelforms import *
 
 # Generate JWT Token
 def get_tokens_for_user(user):
@@ -20,7 +24,7 @@ def get_tokens_for_user(user):
 @api_view(['POST'])
 def register_user(request):
     
-    form = Student(request.POST)
+    form = StudentForm(request.POST)
     if not form.is_valid():
         return Response({"error": form.errors}, status=400)
 
@@ -72,3 +76,25 @@ def login_user(request):
 @permission_classes([IsAuthenticated])
 def protected_view(request):
     return Response({'message': 'This is a protected view'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def query_view(request):
+    #alldata = Student.objects.all()
+    alldata = Student.objects.values()
+    #alldata = Student.objects.filter(name="surendra")
+    #alldata = Student.objects.get(pk=1)
+    #alldata = Student.objects.first()
+    #alldata = Student.objects.last()
+    #alldata = Student.objects.values('name').distinct()
+    #alldata = Student.objects.filter(name__exact='surendra')
+    # alldata = Student.objects.filter(name__iexact='Surendra')
+    # alldata = Student.objects.filter(name__contains='sur')
+    # alldata = Student.objects.filter(name__icontains='sur')
+    #fdata = Student.objects.aggregate(total=Max('age'))
+    #fdata = RegisterSerializer(alldata,many=True)
+    #fdata = model_to_dict(alldata)
+    fdata = alldata
+    print(fdata)
+    return Response({'message': 'This is a protected view','data':fdata}, status=status.HTTP_200_OK)
+    
+    

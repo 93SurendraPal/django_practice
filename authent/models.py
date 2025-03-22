@@ -27,8 +27,8 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
     name = models.CharField(max_length=100,null=True)
     age = models.IntegerField(default=18)
-    father_name = models.CharField(max_length=100)
-    class_name = models.CharField(max_length=100)
+    father_name = models.CharField(max_length=100,null=True)
+    class_name = models.CharField(max_length=100,null=True)
     email = models.CharField(max_length=100,null=True,unique=True)
     password = models.CharField(max_length=300,null=True)
     
