@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=ubuntu
 Group=www-data
-WorkingDirectory=/home/ubuntu/myproject
+WorkingDirectory=/home/ubuntu/myproject/django_practice
 ExecStart=/home/ubuntu/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/myproject/django_practice/practice/practice.sock practice.wsgi:application
 
        
